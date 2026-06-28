@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import { api } from '../lib/api'
 import { useAuth } from '../context/AuthContext'
 import { Zap } from 'lucide-react'
 
@@ -24,7 +24,7 @@ export default function AuthCallbackPage() {
       return
     }
 
-    axios.post('/api/auth/google/callback', { code, state })
+    api.post('/auth/google/callback', { code, state })
       .then(res => {
         login(res.data.user)
         navigate('/chat', { replace: true })

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Zap } from 'lucide-react'
-import axios from 'axios'
+import { api } from '../lib/api'
 import { useAuth } from '../context/AuthContext'
 
 export default function LoginPage() {
@@ -13,7 +13,7 @@ export default function LoginPage() {
   async function handleGoogleLogin() {
     setLoading(true)
     try {
-      const res = await axios.get('/api/auth/google/login-url')
+      const res = await api.get('/auth/google/login-url')
       window.location.href = res.data.url
     } catch {
       setLoading(false)
