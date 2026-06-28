@@ -14,7 +14,7 @@ export default function Layout() {
   const initial = user?.isGuest ? '?' : (user?.name?.[0] || '?')
 
   return (
-    <div className="h-full w-full flex flex-col-reverse md:flex-row bg-clutch-bg overflow-hidden selection:bg-clutch-accent/30">
+    <div className="fixed inset-0 flex flex-col-reverse md:flex-row bg-clutch-bg overflow-hidden selection:bg-clutch-accent/30">
       {/* Global Ambient Background Orbs */}
       <div className="absolute top-[10%] left-[20%] w-[30rem] h-[30rem] bg-clutch-accent/20 rounded-full mix-blend-screen filter blur-[120px] animate-blob pointer-events-none" />
       <div className="absolute top-[20%] right-[20%] w-[30rem] h-[30rem] bg-clutch-green/10 rounded-full mix-blend-screen filter blur-[120px] animate-blob pointer-events-none" style={{ animationDelay: '2s' }} />
