@@ -1,10 +1,11 @@
 import axios from 'axios'
 
-const api = axios.create({ baseURL: '/api' })
+const BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
-export async function sendMessage(userId, message, goalId = null) {
-  const url = goalId ? `/chat/goal/${goalId}` : '/chat'
-  const res = await api.post(url, { userId, message })
+const api = axios.create({ baseURL: BASE_URL })
+
+export async function sendMessage(userId, message) {
+  const res = await api.post('/chat', { userId, message })
   return res.data.reply
 }
 
@@ -24,7 +25,7 @@ export async function updateTask(goalId, taskId, status) {
 }
 
 export async function getCalendarAuthUrl(userId) {
-  const res = await api.get('/auth/google/login-url')
+  const res = await api.get(`/auth/google/login-url?userId=${userId}`)
   return res.data.url
 }
 
@@ -33,8 +34,8 @@ export async function exchangeCalendarCode(userId, code) {
   return res.data
 }
 
-export async function syncToCalendar(userId, tasks, goalTitle, goalId) {
-  const res = await api.post('/auth/calendar/sync', { userId, tasks, goalTitle, goalId })
+export async function syncToCalendar(userId, tasks, goalTitle) {
+  const res = await api.post('/auth/calendar/sync', { userId, tasks, goalTitle })
   return res.data
 }
 
@@ -43,10 +44,6 @@ export async function getCalendarStatus(userId) {
   return res.data
 }
 
-export async function clearHistory(userId, goalId = null) {
-  if (goalId) {
-    await api.delete(`/chat/goal/${goalId}/history/${userId}`)
-  } else {
-    await api.delete(`/chat/history/${userId}`)
-  }
+export async function clearHistory(userId) {
+  await api.delete(`/chat/history/${userId}`)
 }
