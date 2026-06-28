@@ -5,8 +5,14 @@ import { resolve } from 'path'
 
 dotenv.config({ path: '../.env' })
 
-const keyPath = resolve('../serviceAccountKey.json')
-const serviceAccount = JSON.parse(readFileSync(keyPath, 'utf8'))
+let serviceAccount
+
+if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
+  serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON)
+} else {
+  const keyPath = resolve('../serviceAccountKey.json')
+  serviceAccount = JSON.parse(readFileSync(keyPath, 'utf8'))
+}
 
 const db = new Firestore({
   projectId: serviceAccount.project_id,
@@ -118,7 +124,6 @@ export async function getCalendarToken(userId) {
   if (!doc.exists) return null
   return doc.data().tokens
 }
-
 
 export async function saveUser(userId, userData) {
   await db.collection('users').doc(userId).set({ ...userData, updatedAt: new Date().toISOString() })
