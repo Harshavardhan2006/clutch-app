@@ -38,11 +38,16 @@ export default function ChatInterface({ goalId }) {
   const bottomRef = useRef(null)
   const inputRef = useRef(null)
 
-  const handleVoiceResult = useCallback((transcript) => {
-    setInput(prev => {
-      const trimmed = prev.trim()
-      return trimmed ? `${trimmed} ${transcript.trim()}` : transcript.trim()
-    })
+  const [interimVoice, setInterimVoice] = useState('')
+
+  const handleVoiceResult = useCallback((finalStr, interimStr) => {
+    if (finalStr.trim()) {
+      setInput(prev => {
+        const trimmed = prev.trim()
+        return trimmed ? `${trimmed} ${finalStr.trim()}` : finalStr.trim()
+      })
+    }
+    setInterimVoice(interimStr)
     inputRef.current?.focus()
   }, [])
 
@@ -153,7 +158,17 @@ export default function ChatInterface({ goalId }) {
       </div>
 
       <div className={`px-4 pb-4 md:pb-6 pt-2 bg-gradient-to-t from-clutch-bg via-clutch-bg/80 to-transparent z-10 ${goalId ? 'rounded-b-2xl' : ''}`}>
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto relative">
+          
+          {interimVoice && listening && (
+            <div className="absolute bottom-full mb-3 left-0 bg-clutch-surface/90 px-4 py-2 rounded-2xl text-sm text-white/90 italic animate-fade-in shadow-xl backdrop-blur-md border border-white/10 max-w-full md:max-w-[80%] whitespace-pre-wrap">
+              "{interimVoice}"
+              <span className="typing-dot w-1 h-1 rounded-full bg-white/50 ml-1 inline-block" />
+              <span className="typing-dot w-1 h-1 rounded-full bg-white/50 ml-1 inline-block" />
+              <span className="typing-dot w-1 h-1 rounded-full bg-white/50 ml-1 inline-block" />
+            </div>
+          )}
+
           <div className="flex items-end gap-2 p-2.5 bg-clutch-surface/50 backdrop-blur-xl border border-white/10 rounded-2xl focus-within:border-clutch-accent/50 focus-within:bg-clutch-surface/80 focus-within:shadow-glow transition-all duration-300 shadow-xl group">
             <textarea
               ref={inputRef}
@@ -170,10 +185,10 @@ export default function ChatInterface({ goalId }) {
               {supported && (
                 <button
                   onClick={listening ? stopListening : startListening}
-                  className={`flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 ${
+                  className={`flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 transform active:scale-90 ${
                     listening
-                      ? 'bg-clutch-red/20 text-clutch-red animate-pulse'
-                      : 'text-clutch-textSecondary hover:text-white hover:bg-white/10'
+                      ? 'bg-clutch-red/20 text-clutch-red shadow-[0_0_15px_rgba(255,92,92,0.5)] animate-pulse'
+                      : 'text-clutch-textSecondary hover:text-white hover:bg-white/10 hover:scale-105'
                   }`}
                 >
                   {listening ? <MicOff size={16} /> : <Mic size={16} />}

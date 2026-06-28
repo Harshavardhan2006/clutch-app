@@ -13,17 +13,24 @@ export function useVoice(onResult) {
     
     // Set to continuous so it doesn't stop when the user pauses
     recognition.continuous = true
-    recognition.interimResults = false
+    recognition.interimResults = true
     recognition.lang = 'en-US'
 
     recognition.onstart = () => setListening(true)
     recognition.onend = () => setListening(false)
 
     recognition.onresult = (event) => {
-      // Get the latest finalized transcript
-      const current = event.resultIndex
-      const transcript = event.results[current][0].transcript
-      onResult(transcript)
+      let finalStr = ''
+      let interimStr = ''
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript
+        if (event.results[i].isFinal) {
+          finalStr += transcript + ' '
+        } else {
+          interimStr += transcript
+        }
+      }
+      onResult(finalStr, interimStr)
     }
 
     recognition.onerror = (event) => {
