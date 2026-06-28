@@ -178,6 +178,7 @@ export default function DashboardPage() {
   })
   const [loading, setLoading] = useState(() => !goals.length)
   const [selectedDate, setSelectedDate] = useState(null)
+  const [activeTab, setActiveTab] = useState('active')
 
   async function fetchGoals() {
     if (!userId) return
@@ -194,6 +195,19 @@ export default function DashboardPage() {
   }
 
   useEffect(() => { fetchGoals() }, [userId])
+
+  const today = new Date().toISOString().split('T')[0]
+  const [ty, tm, td] = today.split('-').map(Number)
+  
+  const processedGoals = goals.map(goal => {
+    const [dy, dm, dd] = (goal.deadline || today).split('-').map(Number)
+    const daysLeft = Math.round((Date.UTC(dy, dm - 1, dd) - Date.UTC(ty, tm - 1, td)) / (1000 * 60 * 60 * 24))
+    const isPast = daysLeft < 0 || (goal.progress || 0) >= 100
+    return { ...goal, isPast }
+  })
+
+  const activeGoals = processedGoals.filter(g => !g.isPast)
+  const pastGoals = processedGoals.filter(g => g.isPast)
 
   const totalTasks = goals.reduce((sum, g) => sum + (g.tasks?.length || 0), 0)
   const doneTasks = goals.reduce((sum, g) => sum + (g.tasks?.filter(t => t.status === 'done').length || 0), 0)
@@ -220,7 +234,7 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mb-6">
           {[
-            { label: 'Active Goals', value: goals.length, icon: Target, color: 'text-clutch-accent' },
+            { label: 'Active Goals', value: activeGoals.length, icon: Target, color: 'text-clutch-accent' },
             { label: 'Tasks Done', value: doneTasks, icon: CheckCircle2, color: 'text-clutch-green' },
             { label: 'Best Streak', value: `${maxStreak}d`, icon: Flame, color: 'text-clutch-amber' }
           ].map(({ label, value, icon: Icon, color }) => (
@@ -244,21 +258,42 @@ export default function DashboardPage() {
         )}
 
         <div>
-          <h2 className="font-display font-semibold text-clutch-textPrimary mb-4">Your Goals</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-display font-semibold text-clutch-textPrimary">Your Goals</h2>
+            <div className="flex bg-black/20 p-1 rounded-xl border border-white/5">
+              <button
+                onClick={() => setActiveTab('active')}
+                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                  activeTab === 'active' ? 'bg-clutch-surface shadow-sm text-white' : 'text-clutch-textMuted hover:text-white'
+                }`}
+              >
+                Active
+              </button>
+              <button
+                onClick={() => setActiveTab('past')}
+                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                  activeTab === 'past' ? 'bg-clutch-surface shadow-sm text-white' : 'text-clutch-textMuted hover:text-white'
+                }`}
+              >
+                Past
+              </button>
+            </div>
+          </div>
+
           {loading ? (
             <div className="flex items-center justify-center py-16 text-clutch-textMuted">
               <RefreshCw size={20} className="animate-spin mr-2" />
               Loading...
             </div>
-          ) : goals.length === 0 ? (
+          ) : (activeTab === 'active' ? activeGoals : pastGoals).length === 0 ? (
             <div className="text-center py-16 text-clutch-textMuted">
               <Target size={40} className="mx-auto mb-4 opacity-30" />
-              <p className="font-display">No goals yet.</p>
-              <p className="text-sm mt-1">Head to Chat and tell Clutch what you need to get done.</p>
+              <p className="font-display">No {activeTab} goals yet.</p>
+              {activeTab === 'active' && <p className="text-sm mt-1">Head to Chat and tell Clutch what you need to get done.</p>}
             </div>
           ) : (
             <div className="grid gap-4">
-              {goals.map(goal => <GoalCard key={goal.id} goal={goal} />)}
+              {(activeTab === 'active' ? activeGoals : pastGoals).map(goal => <GoalCard key={goal.id} goal={goal} />)}
             </div>
           )}
         </div>
