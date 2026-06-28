@@ -1,5 +1,5 @@
 import express from 'express'
-import { getUserGoals, getGoal, updateTaskStatus } from '../services/firestore.js'
+import { getUserGoals, getGoal, updateTaskStatus, updateTaskDate } from '../services/firestore.js'
 
 const router = express.Router()
 
@@ -26,6 +26,16 @@ router.patch('/:goalId/tasks/:taskId', async (req, res) => {
   try {
     const { status } = req.body
     const result = await updateTaskStatus(req.params.goalId, req.params.taskId, status)
+    res.json(result)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
+router.patch('/:goalId/tasks/:taskId/date', async (req, res) => {
+  try {
+    const { date } = req.body
+    const result = await updateTaskDate(req.params.goalId, req.params.taskId, date)
     res.json(result)
   } catch (err) {
     res.status(500).json({ error: err.message })

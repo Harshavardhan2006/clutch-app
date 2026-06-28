@@ -4,8 +4,10 @@ const BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
 export const api = axios.create({ baseURL: BASE_URL })
 
-export async function sendMessage(userId, message) {
-  const res = await api.post('/chat', { userId, message })
+export async function sendMessage(userId, message, goalId = null) {
+  const personality = localStorage.getItem('clutch_personality') || 'no-nonsense'
+  const endpoint = goalId ? `/chat/goal/${goalId}` : '/chat'
+  const res = await api.post(endpoint, { userId, message, personality })
   return res.data.reply
 }
 
@@ -21,6 +23,11 @@ export async function getGoal(goalId) {
 
 export async function updateTask(goalId, taskId, status) {
   const res = await api.patch(`/goals/${goalId}/tasks/${taskId}`, { status })
+  return res.data
+}
+
+export async function updateTaskDate(goalId, taskId, date) {
+  const res = await api.patch(`/goals/${goalId}/tasks/${taskId}/date`, { date })
   return res.data
 }
 

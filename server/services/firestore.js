@@ -95,6 +95,14 @@ export async function updateTaskStatus(goalId, taskId, status) {
   return { tasks, progress, streak }
 }
 
+export async function updateTaskDate(goalId, taskId, date) {
+  const goal = await getGoal(goalId)
+  if (!goal) return null
+  const tasks = goal.tasks.map(t => t.id === taskId ? { ...t, date } : t)
+  await db.collection('goals').doc(goalId).update({ tasks })
+  return tasks
+}
+
 export async function replanGoal(goalId, newTasks) {
   await db.collection('goals').doc(goalId).update({
     tasks: newTasks,

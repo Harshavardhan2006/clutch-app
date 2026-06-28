@@ -1,17 +1,40 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { DndContext, useSensor, useSensors, PointerSensor, closestCorners } from '@dnd-kit/core'
+import { useDraggable, useDroppable } from '@dnd-kit/core'
 import { ArrowLeft, CheckCircle2, Circle, SkipForward, Flame, Calendar, ExternalLink, RefreshCw, Clock } from 'lucide-react'
-import { getGoal, updateTask, getCalendarAuthUrl, getCalendarStatus, syncToCalendar } from '../lib/api'
+import { getGoal, updateTask, updateTaskDate, getCalendarAuthUrl, getCalendarStatus, syncToCalendar } from '../lib/api'
 import { useUser } from '../hooks/useUser'
 import { format, parseISO, isToday, isPast } from 'date-fns'
 import ChatInterface from '../components/ChatInterface'
 
 function TaskItem({ task, goalId, onUpdate }) {
   const [loading, setLoading] = useState(false)
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: task.id,
+    data: { task }
+  })
+
+  const style = transform ? {
+    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+    zIndex: isDragging ? 50 : 'auto',
+    opacity: isDragging ? 0.8 : 1,
+  } : undefined
 
   async function toggle(status) {
     setLoading(true)
-    await updateTask(goalId, task.id, status)
+    const result = await updateTask(goalId, task.id, status)
+    if (result?.progress === 100 && status === 'done') {
+      import('canvas-confetti').then((confetti) => {
+        confetti.default({
+          particleCount: 150,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#6C63FF', '#00E5A0', '#FFB547', '#FF5C5C'],
+          zIndex: 9999
+        })
+      })
+    }
     onUpdate()
     setLoading(false)
   }
@@ -19,16 +42,21 @@ function TaskItem({ task, goalId, onUpdate }) {
   const isOverdue = isPast(parseISO(task.date)) && !isToday(parseISO(task.date)) && task.status === 'pending'
 
   return (
-    <div className={`group flex items-start gap-4 p-4 rounded-2xl border backdrop-blur-md transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 ${
+    <div 
+      ref={setNodeRef} 
+      style={style} 
+      {...attributes} 
+      {...listeners}
+      className={`group flex items-start gap-4 p-4 rounded-2xl border backdrop-blur-md transition-all duration-300 hover:shadow-lg ${isDragging ? 'shadow-2xl scale-105' : 'hover:-translate-y-0.5'} ${
       task.status === 'done'
         ? 'bg-black/20 border-white/5 opacity-70 hover:opacity-100'
         : task.status === 'skipped'
         ? 'bg-black/20 border-white/5 opacity-50 hover:opacity-80'
         : isToday(parseISO(task.date))
-        ? 'bg-clutch-accent/10 border-clutch-accent/30 shadow-[0_0_15px_rgba(108,99,255,0.1)] hover:bg-clutch-accent/15'
+        ? 'bg-clutch-accent/10 border-clutch-accent/30 shadow-[0_0_15px_rgba(108,99,255,0.1)] hover:bg-clutch-accent/15 cursor-grab active:cursor-grabbing'
         : isOverdue
-        ? 'bg-clutch-red/10 border-clutch-red/20 shadow-[0_0_15px_rgba(255,92,92,0.1)]'
-        : 'bg-clutch-surface/40 border-white/5 hover:bg-clutch-surface/60 hover:border-white/10'
+        ? 'bg-clutch-red/10 border-clutch-red/20 shadow-[0_0_15px_rgba(255,92,92,0.1)] cursor-grab active:cursor-grabbing'
+        : 'bg-clutch-surface/40 border-white/5 hover:bg-clutch-surface/60 hover:border-white/10 cursor-grab active:cursor-grabbing'
     }`}>
       <div className="flex-shrink-0 mt-0.5 transition-transform group-hover:scale-110">
         {task.status === 'done' ? (
@@ -97,6 +125,18 @@ function TaskItem({ task, goalId, onUpdate }) {
   )
 }
 
+function DateDropZone({ date, children }) {
+  const { isOver, setNodeRef } = useDroppable({
+    id: date,
+  })
+
+  return (
+    <div ref={setNodeRef} className={`rounded-2xl transition-colors duration-300 ${isOver ? 'bg-white/10 ring-2 ring-clutch-accent/50' : ''}`}>
+      {children}
+    </div>
+  )
+}
+
 export default function GoalDetailPage() {
   const { goalId } = useParams()
   const { userId } = useUser()
@@ -106,11 +146,44 @@ export default function GoalDetailPage() {
   const [syncing, setSyncing] = useState(false)
   const [syncDone, setSyncDone] = useState(false)
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8, // Require 8px drag before activating
+      },
+    })
+  )
+
   async function fetchGoal() {
     const data = await getGoal(goalId)
     setGoal(data)
     if (data?.calendarSynced) setSyncDone(true)
     setLoading(false)
+  }
+
+  async function handleDragEnd(event) {
+    const { active, over } = event
+    if (!over) return
+
+    const taskId = active.id
+    const newDate = over.id
+    const task = active.data.current.task
+    
+    if (task.date === newDate) return // No change
+
+    // Optimistic update
+    setGoal(prev => {
+      const newTasks = prev.tasks.map(t => t.id === taskId ? { ...t, date: newDate } : t)
+      return { ...prev, tasks: newTasks }
+    })
+    
+    try {
+      await updateTaskDate(goalId, taskId, newDate)
+      fetchGoal()
+    } catch (err) {
+      console.error('Failed to update task date', err)
+      fetchGoal() // Revert on fail
+    }
   }
 
   async function checkCalendar() {
@@ -266,27 +339,31 @@ export default function GoalDetailPage() {
         </div>
 
         {/* Task List */}
-        <div className="space-y-10">
-          {sortedDates.map(date => (
-            <div key={date}>
-              <div className="flex items-center gap-4 mb-4">
-                <div className={`px-3 py-1 rounded-lg border text-xs font-semibold tracking-wider font-mono ${
-                  date === today 
-                    ? 'bg-clutch-accent/20 border-clutch-accent/40 text-clutch-accent shadow-glow-sm' 
-                    : 'bg-white/5 border-white/10 text-clutch-textSecondary'
-                }`}>
-                  {isToday(parseISO(date)) ? 'TODAY' : format(parseISO(date), 'EEE, MMM d').toUpperCase()}
+        <DndContext sensors={sensors} collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
+          <div className="space-y-10">
+            {sortedDates.map(date => (
+              <DateDropZone key={date} date={date}>
+                <div className="p-2 -m-2">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className={`px-3 py-1 rounded-lg border text-xs font-semibold tracking-wider font-mono ${
+                      date === today 
+                        ? 'bg-clutch-accent/20 border-clutch-accent/40 text-clutch-accent shadow-glow-sm' 
+                        : 'bg-white/5 border-white/10 text-clutch-textSecondary'
+                    }`}>
+                      {isToday(parseISO(date)) ? 'TODAY' : format(parseISO(date), 'EEE, MMM d').toUpperCase()}
+                    </div>
+                    <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
+                  </div>
+                  <div className="space-y-3">
+                    {groupedTasks[date].map(task => (
+                      <TaskItem key={task.id} task={task} goalId={goalId} onUpdate={fetchGoal} />
+                    ))}
+                  </div>
                 </div>
-                <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
-              </div>
-              <div className="space-y-3">
-                {groupedTasks[date].map(task => (
-                  <TaskItem key={task.id} task={task} goalId={goalId} onUpdate={fetchGoal} />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+              </DateDropZone>
+            ))}
+          </div>
+        </DndContext>
         
         {/* Goal Specific Chat */}
         <div className="mt-12 h-[500px] bg-black/20 border border-white/5 rounded-2xl shadow-xl flex flex-col overflow-hidden">

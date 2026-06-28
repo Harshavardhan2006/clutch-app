@@ -5,6 +5,7 @@ import DashboardPage from './pages/DashboardPage'
 import GoalDetailPage from './pages/GoalDetailPage'
 import AuthCallbackPage from './pages/AuthCallbackPage'
 import LoginPage from './pages/LoginPage'
+import SettingsPage from './pages/SettingsPage'
 import Layout from './components/Layout'
 
 function ProtectedRoute({ children }) {
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="chat" element={<ChatPage />} />
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="goals/:goalId" element={<GoalDetailPage />} />
+        <Route path="settings" element={<SettingsPage />} />
       </Route>
     </Routes>
   )

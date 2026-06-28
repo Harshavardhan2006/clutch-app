@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { Send, Mic, MicOff, Trash2, Zap } from 'lucide-react'
+import { Send, Mic, MicOff, Trash2, Zap, Volume2, VolumeX } from 'lucide-react'
 import { sendMessage, clearHistory } from '../lib/api'
 import { useUser } from '../hooks/useUser'
 import { useVoice } from '../hooks/useVoice'
+import { useTTS } from '../hooks/useTTS'
 import ChatMessage from './ChatMessage'
 
 export default function ChatInterface({ goalId }) {
@@ -52,6 +53,7 @@ export default function ChatInterface({ goalId }) {
   }, [])
 
   const { listening, supported, startListening, stopListening } = useVoice(handleVoiceResult)
+  const { enabled: ttsEnabled, toggleTTS, speak, supported: ttsSupported } = useTTS()
 
   const containerRef = useRef(null)
 
@@ -80,6 +82,7 @@ export default function ChatInterface({ goalId }) {
     try {
       const reply = await sendMessage(userId, userMsg.text, goalId)
       setMessages(prev => [...prev, { id: Date.now() + 1, role: 'assistant', text: reply, timestamp: new Date() }])
+      speak(reply)
     } catch {
       setMessages(prev => [...prev, { id: Date.now() + 1, role: 'assistant', text: "Something went wrong on my end. Try again?", timestamp: new Date() }])
     } finally {
@@ -111,13 +114,24 @@ export default function ChatInterface({ goalId }) {
               <div className="w-2 h-2 rounded-full bg-clutch-green shadow-[0_0_8px_rgba(0,229,160,0.6)] animate-pulse-slow" />
               <span className="font-display font-semibold text-white/90 text-[15px]">Clutch — AI Productivity Agent</span>
             </div>
-            <button
-              onClick={handleClear}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-white/40 hover:text-clutch-red hover:bg-clutch-red/10 transition-all duration-300 text-xs font-semibold uppercase tracking-wider"
-            >
-              <Trash2 size={14} />
-              Clear
-            </button>
+            <div className="flex items-center gap-2">
+              {ttsSupported && (
+                <button
+                  onClick={toggleTTS}
+                  title={ttsEnabled ? "Mute Voice" : "Unmute Voice"}
+                  className="flex items-center justify-center w-8 h-8 rounded-xl text-white/40 hover:text-white hover:bg-white/10 transition-all duration-300"
+                >
+                  {ttsEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
+                </button>
+              )}
+              <button
+                onClick={handleClear}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-white/40 hover:text-clutch-red hover:bg-clutch-red/10 transition-all duration-300 text-xs font-semibold uppercase tracking-wider"
+              >
+                <Trash2 size={14} />
+                Clear
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -125,13 +139,24 @@ export default function ChatInterface({ goalId }) {
       {goalId && (
         <div className="flex-shrink-0 px-4 py-3 bg-white/5 border-b border-white/5 z-10 flex justify-between items-center rounded-t-2xl">
           <span className="font-display font-semibold text-white/70 text-[13px]">Consult Clutch</span>
-          <button
-            onClick={handleClear}
-            className="flex items-center gap-1.5 px-2 py-1 rounded text-white/40 hover:text-clutch-red hover:bg-clutch-red/10 transition-all duration-300 text-[10px] font-semibold uppercase tracking-wider"
-          >
-            <Trash2 size={12} />
-            Clear
-          </button>
+          <div className="flex items-center gap-2">
+            {ttsSupported && (
+              <button
+                onClick={toggleTTS}
+                title={ttsEnabled ? "Mute Voice" : "Unmute Voice"}
+                className="flex items-center justify-center w-6 h-6 rounded-md text-white/40 hover:text-white hover:bg-white/10 transition-all duration-300"
+              >
+                {ttsEnabled ? <Volume2 size={14} /> : <VolumeX size={14} />}
+              </button>
+            )}
+            <button
+              onClick={handleClear}
+              className="flex items-center gap-1.5 px-2 py-1 rounded text-white/40 hover:text-clutch-red hover:bg-clutch-red/10 transition-all duration-300 text-[10px] font-semibold uppercase tracking-wider"
+            >
+              <Trash2 size={12} />
+              Clear
+            </button>
+          </div>
         </div>
       )}
 

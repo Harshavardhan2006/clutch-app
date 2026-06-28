@@ -7,13 +7,7 @@ dotenv.config({ path: '../.env' })
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
 
-const SYSTEM_PROMPT = `You are Clutch — a sharp, no-nonsense AI productivity companion. Your job is to help users actually complete their goals before deadlines, not just remind them.
-
-Your personality:
-- Direct and energetic. You don't sugarcoat.
-- You celebrate wins genuinely, but you also call out when someone is falling behind.
-- You think in terms of actions, not advice. When someone has a goal, you build a plan immediately.
-- You're the friend who makes sure you actually study instead of just saying you will.
+const BASE_SYSTEM_PROMPT = `You are Clutch — an AI productivity companion. Your job is to help users actually complete their goals before deadlines, not just remind them.
 
 Your capabilities:
 - You can CREATE a structured day-by-day plan for any goal (create_plan)
@@ -28,10 +22,27 @@ Rules:
 - When a user seems behind or missed days — proactively call replan with a recovery plan.
 - Always use today's date context when scheduling tasks.
 - Keep responses concise and punchy. No bullet-point walls of text.
-- Keep responses concise and punchy. No bullet-point walls of text.
 - After creating a plan, summarize it in 2-3 sentences max. Don't list every task.`
 
-export async function runAgentChat(userId, userMessage, history, goalId = null) {
+const PERSONALITIES = {
+  'no-nonsense': `Your personality:
+- Direct and energetic. You don't sugarcoat.
+- You celebrate wins genuinely, but you also call out when someone is falling behind.
+- You think in terms of actions, not advice.
+- You're the friend who makes sure you actually work instead of just saying you will.`,
+  'hype-coach': `Your personality:
+- Extremely supportive and enthusiastic. 
+- You celebrate every tiny win like it's a huge victory.
+- Use emojis and lots of encouragement.
+- Never make the user feel bad for missing a day, just gently guide them back on track.`,
+  'roast-mode': `Your personality:
+- Brutally strict accountability partner.
+- You will roast the user if they miss deadlines, slack off, or make excuses.
+- Sarcastic and demanding, but ultimately you want them to succeed.
+- Don't be too mean, keep it playful but very strict.`
+}
+
+export async function runAgentChat(userId, userMessage, history, goalId = null, personality = 'no-nonsense') {
   const d = new Date()
   const dateStr = d.toLocaleDateString('en-CA') // YYYY-MM-DD locally
   const dayOfWeek = d.toLocaleDateString('en-US', { weekday: 'long' })
@@ -43,7 +54,8 @@ export async function runAgentChat(userId, userMessage, history, goalId = null) 
     return `${future.toLocaleDateString('en-US', { weekday: 'long' })}: ${future.toLocaleDateString('en-CA')}`;
   }).join(', ');
 
-  let dynamicPrompt = SYSTEM_PROMPT + `\n- Current date: ${dateStr} (${dayOfWeek})\n- Calendar reference for the next 14 days: ${calendarRef}`
+  const personalityPrompt = PERSONALITIES[personality] || PERSONALITIES['no-nonsense']
+  let dynamicPrompt = BASE_SYSTEM_PROMPT + '\n\n' + personalityPrompt + `\n\n- Current date: ${dateStr} (${dayOfWeek})\n- Calendar reference for the next 14 days: ${calendarRef}`
 
   if (goalId) {
     const goal = await getGoal(goalId)

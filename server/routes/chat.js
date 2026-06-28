@@ -6,11 +6,11 @@ const router = express.Router()
 
 router.post('/', async (req, res) => {
   try {
-    const { message, userId } = req.body
+    const { message, userId, personality } = req.body
     if (!message || !userId) return res.status(400).json({ error: 'message and userId required' })
 
     const history = await getConversationHistory(userId)
-    const { text, history: updatedHistory } = await runAgentChat(userId, message, history)
+    const { text, history: updatedHistory } = await runAgentChat(userId, message, history, null, personality)
     await saveConversationHistory(userId, updatedHistory)
 
     res.json({ reply: text })
@@ -22,12 +22,12 @@ router.post('/', async (req, res) => {
 
 router.post('/goal/:goalId', async (req, res) => {
   try {
-    const { message, userId } = req.body
+    const { message, userId, personality } = req.body
     const { goalId } = req.params
     if (!message || !userId) return res.status(400).json({ error: 'message and userId required' })
 
     const history = await getConversationHistory(userId, goalId)
-    const { text, history: updatedHistory } = await runAgentChat(userId, message, history, goalId)
+    const { text, history: updatedHistory } = await runAgentChat(userId, message, history, goalId, personality)
     await saveConversationHistory(userId, updatedHistory, goalId)
 
     res.json({ reply: text })
