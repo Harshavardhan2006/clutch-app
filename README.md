@@ -130,14 +130,14 @@ clutch/
 ## 📄 Submission Document
 
 Full project description including solution overview, features, tech stack, and Google technologies:
-**https://docs.google.com/document/d/1A49dRo1Dm88xC6tVqxaRxN2bP3M1NizwHhRbcyauI44/view?usp=sharing**
+**https://docs.google.com/document/d/1A49dRo1Dm88xC6tVqxaRxN2bP3M1NizwHhRbcyauI44/edit?usp=sharing**
 
 ---
 
 ## 👤 Author
 
 **Kokkonda Harshavardhan**
-SR University | kokkondaharshavardhan@gmail.com
+| kokkondaharshavardhan@gmail.com
 
 ---
 
