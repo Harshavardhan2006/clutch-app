@@ -1,0 +1,177 @@
+[debug] [2026-06-29T06:59:14.829Z] ----------------------------------------------------------------------
+[debug] [2026-06-29T06:59:14.833Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\HARSHAVARDHAN\AppData\Local\npm-cache\_npx\ba4f1959e38407b5\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2026-06-29T06:59:14.833Z] CLI Version:   15.22.3
+[debug] [2026-06-29T06:59:14.833Z] Platform:      win32
+[debug] [2026-06-29T06:59:14.833Z] Node Version:  v24.15.0
+[debug] [2026-06-29T06:59:14.834Z] Detected Agent: antigravity
+[debug] [2026-06-29T06:59:14.834Z] Time:          Mon Jun 29 2026 12:29:14 GMT+0530 (India Standard Time)
+[debug] [2026-06-29T06:59:14.834Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-29T06:59:20.644Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-29T06:59:20.644Z] > authorizing via signed-in user (kokkondaharshavardhan@gmail.com)
+[debug] [2026-06-29T06:59:20.644Z] [iam] checking project clutch-app-500518 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-06-29T06:59:20.645Z] Checked if tokens are valid: false, expires at: 1782682183800
+[debug] [2026-06-29T06:59:20.646Z] Checked if tokens are valid: false, expires at: 1782682183800
+[debug] [2026-06-29T06:59:20.646Z] > refreshing access token with scopes: []
+[debug] [2026-06-29T06:59:20.647Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-06-29T06:59:20.647Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-29T06:59:29.139Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-06-29T06:59:29.139Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-29T06:59:29.151Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions [none]
+[debug] [2026-06-29T06:59:29.151Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions  x-goog-user-project=clutch-app-500518
+[debug] [2026-06-29T06:59:29.151Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-29T06:59:53.141Z] *** [apiv2] error from fetch(https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions, {"headers":{},"method":"POST","body":"{\"permissions\":[\"firebase.projects.get\",\"firebasehosting.sites.update\"]}"}): FetchError: request to https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions failed, reason: Client network socket disconnected before secure TLS connection was established
+[debug] [2026-06-29T06:59:53.142Z] *** [apiv2] retrying https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions without keep-alive after a premature close error
+[debug] [2026-06-29T06:59:54.147Z] *** [apiv2] Attempting the request again. Attempt number 2
+[debug] [2026-06-29T06:59:54.147Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions [none]
+[debug] [2026-06-29T06:59:54.147Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions  x-goog-user-project=clutch-app-500518
+[debug] [2026-06-29T06:59:54.147Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-29T07:00:03.154Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions 200
+[debug] [2026-06-29T07:00:03.154Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-29T07:00:03.155Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:00:03.155Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:00:03.155Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/clutch-app-500518 [none]
+[debug] [2026-06-29T07:00:16.866Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/clutch-app-500518 200
+[debug] [2026-06-29T07:00:16.866Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/clutch-app-500518 {"projectId":"clutch-app-500518","projectNumber":"789573405811","displayName":"clutch-app","name":"projects/clutch-app-500518","resources":{"hostingSite":"clutch-app-500518"},"state":"ACTIVE","etag":"1_ae73f761-1c6f-4954-91c8-62ba6df06af5"}
+[info] 
+[info] === Deploying to 'clutch-app-500518'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2026-06-29T07:00:16.872Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:00:16.872Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:00:16.872Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/clutch-app-500518/sites/clutch-app-500518 [none]
+[debug] [2026-06-29T07:00:34.374Z] *** [apiv2] error from fetch(https://firebasehosting.googleapis.com/v1beta1/projects/clutch-app-500518/sites/clutch-app-500518, {"headers":{},"method":"GET"}): FetchError: request to https://firebasehosting.googleapis.com/v1beta1/projects/clutch-app-500518/sites/clutch-app-500518 failed, reason: Client network socket disconnected before secure TLS connection was established
+[debug] [2026-06-29T07:00:34.375Z] *** [apiv2] retrying https://firebasehosting.googleapis.com/v1beta1/projects/clutch-app-500518/sites/clutch-app-500518 without keep-alive after a premature close error
+[debug] [2026-06-29T07:00:35.390Z] *** [apiv2] Attempting the request again. Attempt number 2
+[debug] [2026-06-29T07:00:35.391Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/clutch-app-500518/sites/clutch-app-500518 [none]
+[debug] [2026-06-29T07:00:56.655Z] *** [apiv2] error from fetch(https://firebasehosting.googleapis.com/v1beta1/projects/clutch-app-500518/sites/clutch-app-500518, {"headers":{},"method":"GET"}): FetchError: request to https://firebasehosting.googleapis.com/v1beta1/projects/clutch-app-500518/sites/clutch-app-500518 failed, reason: Client network socket disconnected before secure TLS connection was established
+[debug] [2026-06-29T07:01:01.712Z] Error: Timed out.
+    at Timeout._onTimeout (C:\Users\HARSHAVARDHAN\AppData\Local\npm-cache\_npx\ba4f1959e38407b5\node_modules\firebase-tools\lib\utils.js:313:49)
+    at listOnTimeout (node:internal/timers:605:17)
+    at process.processTimers (node:internal/timers:541:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2026-06-29T07:02:04.163Z] ----------------------------------------------------------------------
+[debug] [2026-06-29T07:02:04.167Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\HARSHAVARDHAN\AppData\Local\npm-cache\_npx\ba4f1959e38407b5\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting --debug
+[debug] [2026-06-29T07:02:04.167Z] CLI Version:   15.22.3
+[debug] [2026-06-29T07:02:04.167Z] Platform:      win32
+[debug] [2026-06-29T07:02:04.167Z] Node Version:  v24.15.0
+[debug] [2026-06-29T07:02:04.167Z] Detected Agent: antigravity
+[debug] [2026-06-29T07:02:04.167Z] Time:          Mon Jun 29 2026 12:32:04 GMT+0530 (India Standard Time)
+[debug] [2026-06-29T07:02:04.167Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-29T07:02:07.482Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-29T07:02:07.484Z] > authorizing via signed-in user (kokkondaharshavardhan@gmail.com)
+[debug] [2026-06-29T07:02:07.484Z] [iam] checking project clutch-app-500518 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-06-29T07:02:07.486Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:07.487Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:07.488Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions [none]
+[debug] [2026-06-29T07:02:07.488Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions  x-goog-user-project=clutch-app-500518
+[debug] [2026-06-29T07:02:07.489Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-29T07:02:08.023Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions 200
+[debug] [2026-06-29T07:02:08.023Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/clutch-app-500518:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-29T07:02:08.024Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:08.024Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:08.024Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/clutch-app-500518 [none]
+[debug] [2026-06-29T07:02:08.838Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/clutch-app-500518 200
+[debug] [2026-06-29T07:02:08.839Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/clutch-app-500518 {"projectId":"clutch-app-500518","projectNumber":"789573405811","displayName":"clutch-app","name":"projects/clutch-app-500518","resources":{"hostingSite":"clutch-app-500518"},"state":"ACTIVE","etag":"1_ae73f761-1c6f-4954-91c8-62ba6df06af5"}
+[info] 
+[info] === Deploying to 'clutch-app-500518'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2026-06-29T07:02:08.843Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:08.843Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:08.843Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/clutch-app-500518/sites/clutch-app-500518 [none]
+[debug] [2026-06-29T07:02:10.110Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/clutch-app-500518/sites/clutch-app-500518 200
+[debug] [2026-06-29T07:02:10.110Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/clutch-app-500518/sites/clutch-app-500518 {"name":"projects/clutch-app-500518/sites/clutch-app-500518","defaultUrl":"https://clutch-app-500518.web.app","type":"DEFAULT_SITE"}
+[debug] [2026-06-29T07:02:10.115Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:10.116Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:10.116Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/clutch-app-500518/versions [none]
+[debug] [2026-06-29T07:02:10.116Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/clutch-app-500518/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2026-06-29T07:02:11.461Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/clutch-app-500518/versions 200
+[debug] [2026-06-29T07:02:11.461Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/clutch-app-500518/versions {"name":"projects/789573405811/sites/clutch-app-500518/versions/d0c51e00c7c3371e","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[clutch-app-500518]: beginning deploy... 
+[info] i  hosting[clutch-app-500518]: found 10 files in client/dist 
+[debug] [2026-06-29T07:02:11.479Z] [hosting] uploading with 200 concurrency
+[debug] [2026-06-29T07:02:11.509Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:11.509Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:11.510Z] [hosting] hash cache [Y2xpZW50XGRpc3Q] stored for 10 files
+[debug] [2026-06-29T07:02:11.510Z] [hosting][hash queue][FINAL] {"max":22,"min":1,"avg":9.5,"active":0,"complete":10,"success":10,"errored":0,"retried":0,"total":10,"elapsed":28}
+[debug] [2026-06-29T07:02:11.510Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/789573405811/sites/clutch-app-500518/versions/d0c51e00c7c3371e:populateFiles [none]
+[debug] [2026-06-29T07:02:11.510Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/789573405811/sites/clutch-app-500518/versions/d0c51e00c7c3371e:populateFiles {"files":{"/icon.svg":"d37f06a4f6fd1a84cad92fcabf16c403755f355e1dd50a50b811c987020a8e77","/favicon.svg":"93a579d9273958bbc91a5029dc3c21ac6a91720ca142e7ed1282e39c870cc853","/index.html":"aa6c96ae9514f82d125f680af81f70a303de052f67f5e0fd03d38c12aba964d7","/workbox-9c191d2f.js":"084c08e6438a2be6eb43e07d343a476b576be68e98b0bd64a3227b201186714c","/sw.js":"7f3cfa723f43cf8dfa67a2a38dffbe83f2901a37acac0af29807b0ae74ad7fb6","/manifest.webmanifest":"254affaca56ae1fabbcab52b62b97b1fd11fc323792ca9cb38ae86b1fcefac47","/assets/index-fNlx8szn.css":"9a78b53612229244ac1b68320367b629f8d8d2b46b338e0d5bdda05b78787a86","/registerSW.js":"09e15d1438017c065a3281739cb5506aeaf7b3047bc3ada992da01d4497c2d43","/assets/confetti.module-wUsLuJ1J.js":"3fc4f59e0ae0ad1970aaab5dfb82f4973c01b0f98cd81bfc4faf91b677a7c975","/assets/index-DZim3hqL.js":"0a5833e1785cbc584ad4f861b0735b805791a43494b1c7d3f38563fd01a14d13"}}
+[debug] [2026-06-29T07:02:12.299Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/789573405811/sites/clutch-app-500518/versions/d0c51e00c7c3371e:populateFiles 200
+[debug] [2026-06-29T07:02:12.300Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/789573405811/sites/clutch-app-500518/versions/d0c51e00c7c3371e:populateFiles {"uploadRequiredHashes":["9a78b53612229244ac1b68320367b629f8d8d2b46b338e0d5bdda05b78787a86","0a5833e1785cbc584ad4f861b0735b805791a43494b1c7d3f38563fd01a14d13","aa6c96ae9514f82d125f680af81f70a303de052f67f5e0fd03d38c12aba964d7","7f3cfa723f43cf8dfa67a2a38dffbe83f2901a37acac0af29807b0ae74ad7fb6"],"uploadUrl":"https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files"}
+[debug] [2026-06-29T07:02:12.300Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:12.300Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:12.301Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:12.301Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:12.301Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:12.301Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:12.301Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:12.301Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:12.301Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/9a78b53612229244ac1b68320367b629f8d8d2b46b338e0d5bdda05b78787a86 [none]
+[debug] [2026-06-29T07:02:12.301Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/9a78b53612229244ac1b68320367b629f8d8d2b46b338e0d5bdda05b78787a86 [stream]
+[debug] [2026-06-29T07:02:12.303Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/0a5833e1785cbc584ad4f861b0735b805791a43494b1c7d3f38563fd01a14d13 [none]
+[debug] [2026-06-29T07:02:12.303Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/0a5833e1785cbc584ad4f861b0735b805791a43494b1c7d3f38563fd01a14d13 [stream]
+[debug] [2026-06-29T07:02:12.304Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/aa6c96ae9514f82d125f680af81f70a303de052f67f5e0fd03d38c12aba964d7 [none]
+[debug] [2026-06-29T07:02:12.304Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/aa6c96ae9514f82d125f680af81f70a303de052f67f5e0fd03d38c12aba964d7 [stream]
+[debug] [2026-06-29T07:02:12.304Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/7f3cfa723f43cf8dfa67a2a38dffbe83f2901a37acac0af29807b0ae74ad7fb6 [none]
+[debug] [2026-06-29T07:02:12.304Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/7f3cfa723f43cf8dfa67a2a38dffbe83f2901a37acac0af29807b0ae74ad7fb6 [stream]
+[debug] [2026-06-29T07:02:12.306Z] [hosting][populate queue][FINAL] {"max":792,"min":792,"avg":792,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":797}
+[debug] [2026-06-29T07:02:12.306Z] [hosting] uploads queued: 4
+[info] i  hosting: uploading new files [0/4] (0%) 
+[debug] [2026-06-29T07:02:14.081Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/9a78b53612229244ac1b68320367b629f8d8d2b46b338e0d5bdda05b78787a86 200
+[debug] [2026-06-29T07:02:14.082Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/9a78b53612229244ac1b68320367b629f8d8d2b46b338e0d5bdda05b78787a86 [stream]
+[debug] [2026-06-29T07:02:14.305Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/7f3cfa723f43cf8dfa67a2a38dffbe83f2901a37acac0af29807b0ae74ad7fb6 200
+[debug] [2026-06-29T07:02:14.305Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/7f3cfa723f43cf8dfa67a2a38dffbe83f2901a37acac0af29807b0ae74ad7fb6 [stream]
+[debug] [2026-06-29T07:02:14.316Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/aa6c96ae9514f82d125f680af81f70a303de052f67f5e0fd03d38c12aba964d7 200
+[debug] [2026-06-29T07:02:14.316Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/aa6c96ae9514f82d125f680af81f70a303de052f67f5e0fd03d38c12aba964d7 [stream]
+[debug] [2026-06-29T07:02:14.949Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/0a5833e1785cbc584ad4f861b0735b805791a43494b1c7d3f38563fd01a14d13 200
+[debug] [2026-06-29T07:02:14.949Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clutch-app-500518/versions/d0c51e00c7c3371e/files/0a5833e1785cbc584ad4f861b0735b805791a43494b1c7d3f38563fd01a14d13 [stream]
+[debug] [2026-06-29T07:02:14.949Z] [hosting][upload queue][FINAL] {"max":2648,"min":1782,"avg":2112.5,"active":0,"complete":4,"success":4,"errored":0,"retried":0,"total":4,"elapsed":2649}
+[info] i  hosting: upload complete 
+[info] +  hosting[clutch-app-500518]: file upload complete 
+[debug] [2026-06-29T07:02:14.950Z] [hosting] deploy completed after 3485ms
+[debug] [2026-06-29T07:02:14.950Z] [
+  {
+    "config": {
+      "public": "client/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "clutch-app-500518"
+    },
+    "version": "projects/789573405811/sites/clutch-app-500518/versions/d0c51e00c7c3371e"
+  }
+]
+[info] i  hosting[clutch-app-500518]: finalizing version... 
+[debug] [2026-06-29T07:02:14.952Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:14.952Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:14.953Z] >>> [apiv2][query] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/clutch-app-500518/versions/d0c51e00c7c3371e updateMask=status%2Cconfig
+[debug] [2026-06-29T07:02:14.953Z] >>> [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/clutch-app-500518/versions/d0c51e00c7c3371e {"status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]}}
+[debug] [2026-06-29T07:02:16.045Z] <<< [apiv2][status] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/clutch-app-500518/versions/d0c51e00c7c3371e 200
+[debug] [2026-06-29T07:02:16.045Z] <<< [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/clutch-app-500518/versions/d0c51e00c7c3371e {"name":"projects/789573405811/sites/clutch-app-500518/versions/d0c51e00c7c3371e","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2026-06-29T07:02:17.244957Z","createUser":{"email":"kokkondaharshavardhan@gmail.com"},"finalizeTime":"2026-06-29T07:02:22.343864Z","finalizeUser":{"email":"kokkondaharshavardhan@gmail.com"}}
+[debug] [2026-06-29T07:02:16.045Z] [hosting] finalized version for clutch-app-500518:[object Object]
+[info] +  hosting[clutch-app-500518]: version finalized 
+[info] i  hosting[clutch-app-500518]: releasing new version... 
+[debug] [2026-06-29T07:02:16.046Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:16.046Z] Checked if tokens are valid: true, expires at: 1782719968139
+[debug] [2026-06-29T07:02:16.046Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/clutch-app-500518/channels/live/releases versionName=projects%2F789573405811%2Fsites%2Fclutch-app-500518%2Fversions%2Fd0c51e00c7c3371e
+[debug] [2026-06-29T07:02:16.046Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/clutch-app-500518/channels/live/releases {}
+[debug] [2026-06-29T07:02:20.241Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/clutch-app-500518/channels/live/releases 200
+[debug] [2026-06-29T07:02:20.241Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/clutch-app-500518/channels/live/releases {"name":"projects/789573405811/sites/clutch-app-500518/channels/live/releases/1782716545811000","version":{"name":"projects/789573405811/sites/clutch-app-500518/versions/d0c51e00c7c3371e","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2026-06-29T07:02:17.244957Z","createUser":{"email":"kokkondaharshavardhan@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocLoAoamvcjlCJvlW0NHGm9RodiMaUr7QQz6jSN-ebJaZw84H4c"},"finalizeTime":"2026-06-29T07:02:22.343864Z","finalizeUser":{"email":"kokkondaharshavardhan@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocLoAoamvcjlCJvlW0NHGm9RodiMaUr7QQz6jSN-ebJaZw84H4c"}},"type":"DEPLOY","releaseTime":"2026-06-29T07:02:25.811Z","releaseUser":{"email":"kokkondaharshavardhan@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocLoAoamvcjlCJvlW0NHGm9RodiMaUr7QQz6jSN-ebJaZw84H4c"}}
+[debug] [2026-06-29T07:02:20.241Z] [hosting] release: {"name":"projects/789573405811/sites/clutch-app-500518/channels/live/releases/1782716545811000","version":{"name":"projects/789573405811/sites/clutch-app-500518/versions/d0c51e00c7c3371e","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2026-06-29T07:02:17.244957Z","createUser":{"email":"kokkondaharshavardhan@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocLoAoamvcjlCJvlW0NHGm9RodiMaUr7QQz6jSN-ebJaZw84H4c"},"finalizeTime":"2026-06-29T07:02:22.343864Z","finalizeUser":{"email":"kokkondaharshavardhan@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocLoAoamvcjlCJvlW0NHGm9RodiMaUr7QQz6jSN-ebJaZw84H4c"}},"type":"DEPLOY","releaseTime":"2026-06-29T07:02:25.811Z","releaseUser":{"email":"kokkondaharshavardhan@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a/ACg8ocLoAoamvcjlCJvlW0NHGm9RodiMaUr7QQz6jSN-ebJaZw84H4c"}}
+[info] +  hosting[clutch-app-500518]: release complete 
+[info] 
+[info] +  Deploy complete! 
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/clutch-app-500518/overview
+[info] Hosting URL: https://clutch-app-500518.web.app

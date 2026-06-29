@@ -104,7 +104,7 @@ export default function Layout() {
 
           {/* Profile Dropdown Menu */}
           {showProfileMenu && (
-            <div className="absolute bottom-full mb-4 md:bottom-0 md:left-full md:mb-0 md:ml-4 w-56 bg-clutch-surface/90 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl p-2 animate-slide-up origin-bottom-left z-50">
+            <div className="absolute bottom-full right-0 mb-4 md:bottom-0 md:right-auto md:left-full md:mb-0 md:ml-4 w-56 bg-clutch-surface/90 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl p-2 animate-slide-up origin-bottom-right md:origin-bottom-left z-50">
               <div className="p-3 border-b border-white/5 mb-2">
                 <div className="font-semibold text-white truncate">{user?.isGuest ? 'Guest User' : user?.name}</div>
                 <div className="text-xs text-clutch-textSecondary truncate">{user?.isGuest ? 'Not signed in' : user?.email}</div>
