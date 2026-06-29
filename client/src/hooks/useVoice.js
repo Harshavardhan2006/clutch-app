@@ -4,6 +4,7 @@ export function useVoice(onResult) {
   const [listening, setListening] = useState(false)
   const [supported] = useState(() => 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window)
   const recognitionRef = useRef(null)
+  const lastFinalRef = useRef('')
 
   useEffect(() => {
     if (!supported) return
@@ -16,21 +17,35 @@ export function useVoice(onResult) {
     recognition.interimResults = true
     recognition.lang = 'en-US'
 
-    recognition.onstart = () => setListening(true)
+    recognition.onstart = () => {
+      setListening(true)
+      lastFinalRef.current = ''
+    }
+    
     recognition.onend = () => setListening(false)
 
     recognition.onresult = (event) => {
-      let finalStr = ''
+      let sessionFinal = ''
       let interimStr = ''
-      for (let i = event.resultIndex; i < event.results.length; i++) {
+      
+      for (let i = 0; i < event.results.length; i++) {
         const transcript = event.results[i][0].transcript
         if (event.results[i].isFinal) {
-          finalStr += transcript + ' '
+          sessionFinal += transcript + ' '
         } else {
           interimStr += transcript
         }
       }
-      onResult(finalStr, interimStr)
+
+      let newFinal = ''
+      if (sessionFinal.startsWith(lastFinalRef.current)) {
+        newFinal = sessionFinal.slice(lastFinalRef.current.length)
+      } else {
+        newFinal = sessionFinal
+      }
+      
+      lastFinalRef.current = sessionFinal
+      onResult(newFinal, interimStr)
     }
 
     recognition.onerror = (event) => {

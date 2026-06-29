@@ -74,6 +74,11 @@ export default function ChatInterface({ goalId }) {
 
   async function handleSend() {
     if (!input.trim() || !userId || loading) return
+
+    if (listening) {
+      stopListening()
+    }
+
     const userMsg = { id: Date.now(), role: 'user', text: input.trim(), timestamp: new Date() }
     setMessages(prev => [...prev, userMsg])
     setInput('')
