@@ -25,7 +25,7 @@ Tell Clutch your goal and deadline in plain language. The Gemini-powered agent a
 - **Agentic AI** — Gemini 2.5 Flash with function calling executes real backend actions (not just chat responses)
 - **Five Agent Tools** — `create_plan`, `update_progress`, `get_status`, `replan`, `list_goals`
 - **Three AI Personalities** — No-nonsense, Hype Coach, Roast Mode
-- **Dynamic Replanning** — Falls behind? The agent redistributes tasks automatically
+- **Dynamic Replanning** — Falling behind? The agent redistributes tasks automatically
 - **Google Calendar Sync** — Push tasks to your calendar as events with reminders
 - **Google Sign-In + Guest Mode** — Sign in with Google or jump in instantly as a guest
 - **7-Day Calendar Strip** — Interactive dashboard showing task distribution
@@ -93,7 +93,7 @@ Backend runs at `http://localhost:3000`
 ### Environment Variables
 
 ```env
-GEMINI_API_KEY=your_gemini_api_key
+GEMINI_API_KEY=your_gemini_api_key_here
 GOOGLE_CLIENT_ID=your_google_oauth_client_id
 GOOGLE_CLIENT_SECRET=your_google_oauth_client_secret
 GOOGLE_REDIRECT_URI=http://localhost:5173/auth/callback
@@ -105,24 +105,34 @@ PORT=3000
 
 ## 📁 Project Structure
 
-```
+```text
 clutch/
 ├── client/                 # React + Vite frontend
+│   ├── public/             # Static assets
 │   ├── src/
-│   │   ├── components/     # Layout, ChatMessage, TaskItem
-│   │   ├── context/        # AuthContext
-│   │   ├── hooks/          # useUser, useVoice
-│   │   ├── lib/            # API client
-│   │   └── pages/          # Chat, Dashboard, GoalDetail, Login
-│   └── package.json
+│   │   ├── components/     # React components (Layout, ChatMessage, TaskItem, etc.)
+│   │   ├── context/        # React Context (AuthContext)
+│   │   ├── hooks/          # Custom hooks
+│   │   ├── lib/            # Utilities and API client
+│   │   ├── pages/          # Chat, Dashboard, GoalDetail, Login, Settings, AuthCallback
+│   │   ├── App.jsx         # Main App component
+│   │   ├── index.css       # Global styles (Tailwind)
+│   │   └── main.jsx        # Entry point
+│   ├── index.html          # HTML template
+│   ├── package.json        # Client dependencies
+│   ├── tailwind.config.js  # Tailwind CSS configuration
+│   └── vite.config.js      # Vite configuration
 ├── server/                 # Node.js + Express backend
 │   ├── functions/          # Gemini agent function definitions
-│   ├── routes/             # chat, goals, auth
-│   ├── services/           # gemini.js, firestore.js
-│   └── index.js
-├── .env.example
-├── firebase.json
-└── README.md
+│   ├── routes/             # API routes (auth, chat, goals)
+│   ├── services/           # Services (firestore.js, gemini.js)
+│   ├── index.js            # Express server entry point
+│   ├── list_models.js      # Utility to list Gemini models
+│   └── package.json        # Server dependencies
+├── .env.example            # Environment variables template
+├── firebase.json           # Firebase configuration
+├── package.json            # Root workspace package.json
+└── README.md               # Project documentation
 ```
 
 ---
@@ -137,7 +147,7 @@ Full project description including solution overview, features, tech stack, and 
 ## 👤 Author
 
 **Kokkonda Harshavardhan**
-| kokkondaharshavardhan@gmail.com
+📧 [kokkondaharshavardhan@gmail.com](mailto:kokkondaharshavardhan@gmail.com)
 
 ---
 
