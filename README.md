@@ -8,7 +8,7 @@ Clutch is a chat-based AI productivity companion that helps users plan, track, a
 
 - **Live App:** https://clutch-app-500518.web.app
 - **GitHub:** https://github.com/Harshavardhan2006/clutch-app
-- **Project Doc:** https://docs.google.com/document/d/1A49dRo1Dm88xC6tVqxaRxN2bP3M1NizwHhRbcyauI44/view?usp=sharing
+- **Project Doc:** https://docs.google.com/document/d/1A49dRo1Dm88xC6tVqxaRxN2bP3M1NizwHhRbcyauI44/edit?usp=sharing
 
 ---
 
